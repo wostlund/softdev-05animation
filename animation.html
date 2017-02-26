@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HW#3 Canvas</title>
+  </heaD>
+  <body>
+    <canvas height="750" width="750" id="a" style="border:2px solid black;">
+    </canvas>
+    <button id="clear" name="clear">Stop</button>
+    <button id="dvd" name="dvd">DVD Player Thing</button>
+    <button id="circle" name ="circle">Growing Circle</button>
+    <script>
+      var canvas = document.getElementById("a");
+      var content = canvas.getContext("2d");
+      var k = Math.random() * 50 + 50;
+      var rid = window.requestAnimationFrame(createDot);
+      var mark = true;
+      var x = 300;
+      var y = 300;
+      var xvel = Math.random() * 2 - 1;
+      var yvel = Math.random() * 2 - 1;
+      var cvel = Math.random() * 2 - 1;
+      
+      function createDot(){
+        content.clearRect(0, 0 , canvas.width, canvas.height);
+        content.fillStyle = "goldenrod";
+        //content.beginPath();
+        content.beginPath();
+        if (x < k || x > 750 - k){
+            xvel *= -1;
+        }else if (y < k || y>750 - k){
+            yvel*= -1;
+        }
+        x += xvel;
+        y += yvel;
+        content.arc(x, y, k, 0, 2 * Math.PI);
+        content.fill();
+        content.stroke();
+        console.log(k);
+        if (mark){
+            window.requestAnimationFrame(createDot);
+        }
+      };
+    
+      function circle(){
+        content.clearRect(0, 0 , canvas.width, canvas.height);
+        content.fillStyle = "goldenrod";
+        //content.beginPath();
+        content.beginPath();
+        if (k > 325){
+            cvel *= -1;   
+        }else if (k < 50){
+            cvel *= -1;
+        }
+        k+=cvel;
+        content.arc(325, 325, k, 0, 2 * Math.PI);
+        content.fill();
+        content.stroke();
+        console.log(k);
+        if (mark){
+            window.requestAnimationFrame(circle);
+        }
+      };
+
+      var a = document.getElementById("clear");
+      a.addEventListener('click', function(e){
+         mark = !mark; 
+      });
+    
+      var b = document.getElementById("dvd");
+      b.addEventListener('click', function(e){
+        var canvas = document.getElementById("a");
+        var content = canvas.getContext("2d");
+        content.clearRect(0, 0, canvas.width, canvas.height);
+        content.beginPath();
+            mark = true;
+            window.requestAnimationFrame(createDot);
+        
+      });
+        
+    var c = document.getElementById("circle");
+      c.addEventListener('click', function(e){
+        var canvas = document.getElementById("a");
+        var content = canvas.getContext("2d");
+        content.clearRect(0, 0, canvas.width, canvas.height);
+        content.beginPath();
+            mark = true;
+            window.requestAnimationFrame(circle);
+        
+      });
+     
+    </script>
+  </body>
+</html>
